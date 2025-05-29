@@ -1,4 +1,4 @@
-/* Tailwind CSS configuration for Twedl.com */
+/* Tailwind CSS configuration for Twedl.com with updated brighter colors */
 module.exports = {
   content: [
     './resources/**/*.blade.php',
@@ -10,33 +10,33 @@ module.exports = {
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#6366F1',
-          hover: '#4F46E5',
-          light: '#EEF2FF',
+          DEFAULT: '#27667B',
+          hover: '#143D60',
+          light: '#DDEB9D',
         },
         secondary: {
-          DEFAULT: '#EC4899',
-          hover: '#DB2777',
-          light: '#FCE7F3',
+          DEFAULT: '#A0C878',
+          hover: '#8BB562',
+          light: '#E9F5D0',
         },
         neutral: {
           background: '#FFFFFF',
           card: '#F9FAFB',
-          'dark-bg': '#111827',
-          'dark-card': '#1F2937',
+          'dark-bg': '#0F2A45',
+          'dark-card': '#1A3A5A',
         },
         text: {
-          primary: '#111827',
-          secondary: '#4B5563',
-          light: '#9CA3AF',
+          primary: '#143D60',
+          secondary: '#27667B',
+          light: '#6B8A9C',
           dark: '#F9FAFB',
           'dark-secondary': '#D1D5DB',
         },
         status: {
-          success: '#10B981',
-          warning: '#F59E0B',
-          error: '#EF4444',
-          info: '#3B82F6',
+          success: '#A0C878',
+          warning: '#F5D76E',
+          error: '#E74C3C',
+          info: '#27667B',
         },
       },
       fontFamily: {
@@ -45,8 +45,8 @@ module.exports = {
         mono: ['JetBrains Mono', 'monospace'],
       },
       boxShadow: {
-        card: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-        'card-hover': '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+        card: '0 4px 6px -1px rgba(20, 61, 96, 0.1), 0 2px 4px -1px rgba(20, 61, 96, 0.06)',
+        'card-hover': '0 10px 15px -3px rgba(20, 61, 96, 0.1), 0 4px 6px -2px rgba(20, 61, 96, 0.05)',
       },
       transitionDuration: {
         fast: '150ms',
