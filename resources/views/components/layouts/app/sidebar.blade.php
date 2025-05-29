@@ -1,217 +1,245 @@
-{{-- resources/views/components/layouts/app/sidebar.blade.php --}}
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="dark">
 <head>
     @include('partials.head')
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Base styles for improved appearance */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
 </head>
-<body class="min-h-screen bg-white dark:bg-zinc-800">
-    <x-nav />
+<body class="min-h-screen bg-white dark:bg-neutral-dark-bg text-text-primary dark:text-text-dark">
+    <div class="flex min-h-screen">
+        <!-- Sidebar -->
+        <aside class="fixed inset-y-0 left-0 z-50 w-64 transform transition-transform duration-normal ease-in-out bg-neutral-card dark:bg-neutral-dark-card border-r border-gray-200 dark:border-gray-700 lg:translate-x-0 lg:static lg:inset-0 {{ request()->routeIs('dashboard') ? '' : '-translate-x-full' }} lg:translate-x-0">
+            <div class="flex flex-col h-full">
+                <!-- Logo -->
+                <div class="flex items-center justify-between px-4 py-5 border-b border-gray-200 dark:border-gray-700">
+                    <a href="{{ route('dashboard') }}" class="flex items-center space-x-2 rtl:space-x-reverse" wire:navigate>
+                        <x-app-logo class="w-8 h-8" />
+                        <span class="text-xl font-bold text-primary">Twedl</span>
+                    </a>
+                    <button class="p-2 rounded-md lg:hidden hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none" id="closeSidebar">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
 
-    <flux:sidebar sticky stashable class="border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
-        <flux:sidebar.toggle class="lg:hidden" icon="x-mark" />
+                <!-- Navigation -->
+                <nav class="flex-1 px-4 py-5 space-y-6 overflow-y-auto">
+                    <div>
+                        <h3 class="text-xs font-semibold text-text-light dark:text-text-dark-secondary uppercase tracking-wider">
+                            {{ __('Platform') }}
+                        </h3>
+                        <ul class="mt-3 space-y-1">
+                            <li>
+                                <a href="{{ route('dashboard') }}" 
+                                   class="flex items-center px-3 py-2 text-sm font-medium rounded-md {{ request()->routeIs('dashboard') ? 'bg-primary-light text-primary dark:bg-opacity-20' : 'text-text-secondary dark:text-text-dark-secondary hover:bg-gray-100 dark:hover:bg-gray-800' }}"
+                                   wire:navigate>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                                    </svg>
+                                    {{ __('Dashboard') }}
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('events.index') }}" 
+                                   class="flex items-center px-3 py-2 text-sm font-medium rounded-md {{ request()->routeIs('events.*') && !request()->routeIs('events.create') ? 'bg-primary-light text-primary dark:bg-opacity-20' : 'text-text-secondary dark:text-text-dark-secondary hover:bg-gray-100 dark:hover:bg-gray-800' }}"
+                                   wire:navigate>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                    </svg>
+                                    {{ __('My Events') }}
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('events.create') }}" 
+                                   class="flex items-center px-3 py-2 text-sm font-medium rounded-md {{ request()->routeIs('events.create') ? 'bg-primary-light text-primary dark:bg-opacity-20' : 'text-text-secondary dark:text-text-dark-secondary hover:bg-gray-100 dark:hover:bg-gray-800' }}"
+                                   wire:navigate>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                                    </svg>
+                                    {{ __('Create Event') }}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
 
-        <a href="{{ route('dashboard') }}" class="me-5 flex items-center space-x-2 rtl:space-x-reverse" wire:navigate>
-            <x-app-logo />
-        </a>
+                    @if(auth()->user()?->is_admin)
+                    <div>
+                        <h3 class="text-xs font-semibold text-text-light dark:text-text-dark-secondary uppercase tracking-wider">
+                            {{ __('Admin Tools') }}
+                        </h3>
+                        <ul class="mt-3 space-y-1">
+                            <li>
+                                <a href="{{ route('admin.tags.index') }}" 
+                                   class="flex items-center px-3 py-2 text-sm font-medium rounded-md {{ request()->routeIs('admin.tags.*') ? 'bg-primary-light text-primary dark:bg-opacity-20' : 'text-text-secondary dark:text-text-dark-secondary hover:bg-gray-100 dark:hover:bg-gray-800' }}"
+                                   wire:navigate>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                                    </svg>
+                                    {{ __('Moderate Tags') }}
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.event-types.index') }}" 
+                                   class="flex items-center px-3 py-2 text-sm font-medium rounded-md {{ request()->routeIs('admin.event-types.*') ? 'bg-primary-light text-primary dark:bg-opacity-20' : 'text-text-secondary dark:text-text-dark-secondary hover:bg-gray-100 dark:hover:bg-gray-800' }}"
+                                   wire:navigate>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+                                    </svg>
+                                    {{ __('Manage Event Types') }}
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.events.moderate') }}" 
+                                   class="flex items-center px-3 py-2 text-sm font-medium rounded-md {{ request()->routeIs('admin.events.*') ? 'bg-primary-light text-primary dark:bg-opacity-20' : 'text-text-secondary dark:text-text-dark-secondary hover:bg-gray-100 dark:hover:bg-gray-800' }}"
+                                   wire:navigate>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                                    </svg>
+                                    {{ __('Moderate Events') }}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    @endif
+                </nav>
 
-        {{-- Platform navigation --}}
-        <flux:navlist variant="outline">
-            <flux:navlist.group :heading="__('Platform')" class="grid">
-                <flux:navlist.item 
-                    icon="home" 
-                    :href="route('dashboard')" 
-                    :current="request()->routeIs('dashboard')" 
-                    wire:navigate
-                >
-                    {{ __('Dashboard') }}
-                </flux:navlist.item>
-            </flux:navlist.group>
-        </flux:navlist>
-
-        {{-- Admin tools --}}
-        @php
-            $pendingTagCount = \App\Models\Tag::where('status', \App\Models\Tag::STATUS_PENDING)->count();
-        @endphp
-
-        @if(auth()->user()?->is_admin)
-            <flux:navlist variant="outline">
-                <flux:navlist.group :heading="__('Admin Tools')" class="grid">
-                    <flux:navlist.item 
-                        :href="route('admin.tags.index')" 
-                        icon="tag"
-                        wire:navigate
-                    >
-                        {{ __('Moderate Tags') }}
-                    </flux:navlist.item>
-                    <flux:navlist.item 
-                        :href="route('admin.event-types.index')" 
-                        icon="list-bullet"
-                        wire:navigate
-                    >
-                        {{ __('Manage Event Types') }}
-                    </flux:navlist.item>
-                    <flux:navlist.item 
-                        :href="route('admin.events.moderate')" 
-                        icon="calendar-days" 
-                        wire:navigate
-                    >
-                        {{ __('Moderate Events') }}
-                    </flux:navlist.item>
-
-                </flux:navlist.group>
-            </flux:navlist>
-        @endif
-
-        <flux:spacer />
-
-        <flux:navlist variant="outline">
-            <flux:navlist.item 
-                icon="folder-git-2" 
-                href="https://github.com/laravel/livewire-starter-kit" 
-                target="_blank"
-            >
-                {{ __('Repository') }}
-            </flux:navlist.item>
-            <flux:navlist.item 
-                icon="book-open-text" 
-                href="https://laravel.com/docs/starter-kits" 
-                target="_blank"
-            >
-                {{ __('Documentation') }}
-            </flux:navlist.item>
-        </flux:navlist>
-
-        {{-- Desktop user menu --}}
-        @auth
-        <flux:dropdown position="bottom" align="start">
-            <flux:profile
-                :name="auth()->user()->name"
-                :initials="auth()->user()->initials()"
-                icon-trailing="chevrons-up-down"
-            />
-            <flux:menu class="w-[220px]">
-                <flux:menu.radio.group>
-                    <div class="p-0 text-sm font-normal">
-                        <div class="flex items-center gap-2 px-1 py-1.5 text-start text-sm">
-                            <span class="relative flex h-8 w-8 shrink-0 overflow-hidden rounded-lg">
-                                <span
-                                    class="flex h-full w-full items-center justify-center rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white"
-                                >
-                                    {{ auth()->user()->initials() }}
-                                </span>
-                            </span>
-                            <div class="grid flex-1 text-start text-sm leading-tight">
-                                <span class="truncate font-semibold">{{ auth()->user()->name }}</span>
-                                <span class="truncate text-xs">{{ auth()->user()->email }}</span>
+                <!-- User Menu -->
+                @auth
+                <div class="border-t border-gray-200 dark:border-gray-700 p-4">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <div class="h-10 w-10 rounded-full bg-primary-light dark:bg-primary-light/20 flex items-center justify-center text-primary font-medium">
+                                {{ auth()->user()->initials() }}
+                            </div>
+                        </div>
+                        <div class="ml-3 flex-1 min-w-0">
+                            <div class="text-sm font-medium text-text-primary dark:text-text-dark truncate">
+                                {{ auth()->user()->name }}
+                            </div>
+                            <div class="text-xs text-text-secondary dark:text-text-dark-secondary truncate">
+                                {{ auth()->user()->email }}
+                            </div>
+                        </div>
+                        <div class="relative" x-data="{ open: false }">
+                            <button @click="open = !open" class="p-1 rounded-full text-text-secondary dark:text-text-dark-secondary hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </button>
+                            <div x-show="open" @click.away="open = false" class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-neutral-dark-card ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 dark:divide-gray-700">
+                                <div class="py-1">
+                                    <a href="{{ route('settings.profile') }}" class="block px-4 py-2 text-sm text-text-primary dark:text-text-dark hover:bg-gray-100 dark:hover:bg-gray-800" wire:navigate>
+                                        {{ __('Settings') }}
+                                    </a>
+                                </div>
+                                <div class="py-1">
+                                    <form method="POST" action="{{ route('logout') }}">
+                                        @csrf
+                                        <button type="submit" class="block w-full text-left px-4 py-2 text-sm text-text-primary dark:text-text-dark hover:bg-gray-100 dark:hover:bg-gray-800">
+                                            {{ __('Log Out') }}
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </flux:menu.radio.group>
-                <flux:menu.separator/>
-                <flux:menu.radio.group>
-                    <flux:menu.item 
-                        :href="route('settings.profile')" 
-                        icon="cog" 
-                        wire:navigate
-                    >
-                        {{ __('Settings') }}
-                    </flux:menu.item>
-                </flux:menu.radio.group>
-                <flux:menu.separator/>
-                <form method="POST" action="{{ route('logout') }}" class="w-full">
-                    @csrf
-                    <flux:menu.item 
-                        as="button" 
-                        type="submit" 
-                        icon="arrow-right-start-on-rectangle" 
-                        class="w-full"
-                    >
-                        {{ __('Log Out') }}
-                    </flux:menu.item>
-                </form>
-            </flux:menu>
-        </flux:dropdown>
-        @endauth
-    </flux:sidebar>
+                </div>
+                @endauth
+            </div>
+        </aside>
 
-    {{-- Mobile user menu --}}
-    @auth
-    <flux:header class="lg:hidden">
-        <flux:sidebar.toggle class="lg:hidden" icon="bars-2" inset="left" />
-        <flux:spacer />
-        <flux:dropdown position="top" align="end">
-            <flux:profile
-                :initials="auth()->user()->initials()"
-                icon-trailing="chevron-down"
-            />
-            <flux:menu>
-                <flux:menu.radio.group>
-                    <div class="p-0 text-sm font-normal">
-                        <div class="flex items-center gap-2 px-1 py-1.5 text-start text-sm">
-                            <span class="relative flex h-8 w-8 shrink-0 overflow-hidden rounded-lg">
-                                <span
-                                    class="flex h-full w-full items-center justify-center rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white"
-                                >
-                                    {{ auth()->user()->initials() }}
-                                </span>
-                            </span>
-                            <div class="grid flex-1 text-start text-sm leading-tight">
-                                <span class="truncate font-semibold">{{ auth()->user()->name }}</span>
-                                <span class="truncate text-xs">{{ auth()->user()->email }}</span>
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col min-w-0">
+            <!-- Mobile Header -->
+            <header class="lg:hidden bg-white dark:bg-neutral-dark-bg border-b border-gray-200 dark:border-gray-700 sticky top-0 z-40">
+                <div class="flex items-center justify-between px-4 py-3">
+                    <button class="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none" id="openSidebar">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                    <a href="{{ route('dashboard') }}" class="flex items-center" wire:navigate>
+                        <x-app-logo class="w-8 h-8" />
+                        <span class="ml-2 text-xl font-bold text-primary">Twedl</span>
+                    </a>
+                    @auth
+                    <div class="relative" x-data="{ open: false }">
+                        <button @click="open = !open" class="flex items-center text-sm focus:outline-none">
+                            <div class="h-8 w-8 rounded-full bg-primary-light dark:bg-primary-light/20 flex items-center justify-center text-primary font-medium">
+                                {{ auth()->user()->initials() }}
+                            </div>
+                        </button>
+                        <div x-show="open" @click.away="open = false" class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-neutral-dark-card ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 dark:divide-gray-700">
+                            <div class="py-1">
+                                <a href="{{ route('settings.profile') }}" class="block px-4 py-2 text-sm text-text-primary dark:text-text-dark hover:bg-gray-100 dark:hover:bg-gray-800" wire:navigate>
+                                    {{ __('Settings') }}
+                                </a>
+                            </div>
+                            <div class="py-1">
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button type="submit" class="block w-full text-left px-4 py-2 text-sm text-text-primary dark:text-text-dark hover:bg-gray-100 dark:hover:bg-gray-800">
+                                        {{ __('Log Out') }}
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     </div>
-                </flux:menu.radio.group>
-                <flux:menu.separator/>
-                <flux:menu.radio.group>
-                    <flux:menu.item 
-                        :href="route('settings.profile')" 
-                        icon="cog" 
-                        wire:navigate
-                    >
-                        {{ __('Settings') }}
-                    </flux:menu.item>
-                </flux:menu.radio.group>
-                <flux:menu.separator/>
-                <form method="POST" action="{{ route('logout') }}" class="w-full">
-                    @csrf
-                    <flux:menu.item 
-                        as="button" 
-                        type="submit" 
-                        icon="arrow-right-start-on-rectangle" 
-                        class="w-full"
-                    >
-                        {{ __('Log Out') }}
-                    </flux:menu.item>
-                </form>
-            </flux:menu>
-        </flux:dropdown>
-    </flux:header>
-    @endauth
+                    @endauth
+                </div>
+            </header>
 
-    {{-- Page content --}}
-    <flux:main>
-        <div class="max-w-4xl mx-auto px-4 py-8">
-            {{ $slot }}
+            <!-- Main Content Area -->
+            <main class="flex-1 overflow-y-auto bg-gray-50 dark:bg-neutral-dark-bg/50 p-4 md:p-6 lg:p-8">
+                <div class="max-w-7xl mx-auto">
+                    {{ $slot }}
+                </div>
+            </main>
         </div>
-    </flux:main>
+    </div>
 
-    {{-- Livewire/Flux scripts --}}
+    <!-- Scripts -->
     @fluxScripts
     @stack('scripts')
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const select = document.getElementById('tags');
-        if (select) {
-            $(select).select2({
-                placeholder: 'Select or type tags',
-                tags: true,
-                tokenSeparators: [',']
-            });
-        }
-    });
+        document.addEventListener('DOMContentLoaded', function () {
+            // Select2 initialization
+            const select = document.getElementById('tags');
+            if (select) {
+                $(select).select2({
+                    placeholder: 'Select or type tags',
+                    tags: true,
+                    tokenSeparators: [',']
+                });
+            }
+
+            // Mobile sidebar toggle
+            const openSidebarBtn = document.getElementById('openSidebar');
+            const closeSidebarBtn = document.getElementById('closeSidebar');
+            const sidebar = document.querySelector('aside');
+
+            if (openSidebarBtn && closeSidebarBtn && sidebar) {
+                openSidebarBtn.addEventListener('click', () => {
+                    sidebar.classList.remove('-translate-x-full');
+                });
+
+                closeSidebarBtn.addEventListener('click', () => {
+                    sidebar.classList.add('-translate-x-full');
+                });
+            }
+        });
     </script>
 </body>
 </html>
