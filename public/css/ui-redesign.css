@@ -2,61 +2,140 @@
 
 /* Navigation button styles */
 .nav-button {
-    @apply px-3 py-1 rounded-button text-white font-medium transition-all duration-normal;
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 0.375rem;
+    color: white;
+    font-weight: 500;
+    transition: all 0.2s ease;
 }
 
 .nav-button-home {
-    @apply bg-green-500 hover:bg-green-600;
+    background-color: #10B981;
+}
+.nav-button-home:hover {
+    background-color: #059669;
 }
 
 .nav-button-events {
-    @apply bg-accent-green hover:bg-green-600;
+    background-color: #3B82F6;
+}
+.nav-button-events:hover {
+    background-color: #2563EB;
 }
 
 .nav-button-create {
-    @apply bg-accent-orange hover:bg-amber-600;
+    background-color: #F59E0B;
+}
+.nav-button-create:hover {
+    background-color: #D97706;
 }
 
 .nav-button-about {
-    @apply bg-accent-purple hover:bg-purple-600;
+    background-color: #8B5CF6;
+}
+.nav-button-about:hover {
+    background-color: #7C3AED;
 }
 
 /* Auth button styles */
 .login-button {
-    @apply bg-primary text-white px-4 py-2 rounded-button font-medium hover:bg-primary-hover transition-all duration-normal;
+    display: inline-block;
+    background-color: #10B981;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+.login-button:hover {
+    background-color: #059669;
 }
 
 .signup-button {
-    @apply bg-secondary text-white px-4 py-2 rounded-button font-medium hover:bg-secondary-hover transition-all duration-normal;
+    display: inline-block;
+    background-color: #EC4899;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+.signup-button:hover {
+    background-color: #DB2777;
 }
 
 /* Hero section styles */
 .hero-container {
-    @apply py-16 md:py-24 px-4;
+    padding: 4rem 1rem;
+}
+@media (min-width: 768px) {
+    .hero-container {
+        padding: 6rem 1rem;
+    }
 }
 
 .hero-title {
-    @apply text-4xl md:text-6xl font-bold mb-6 leading-tight;
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+}
+@media (min-width: 768px) {
+    .hero-title {
+        font-size: 3.75rem;
+        line-height: 1;
+    }
 }
 
 .hero-description {
-    @apply text-xl text-text-secondary mb-8 max-w-2xl;
+    font-size: 1.25rem;
+    color: #6B7280;
+    margin-bottom: 2rem;
+    max-width: 42rem;
 }
 
 /* Feature section styles */
 .feature-icon {
-    @apply w-12 h-12 mb-4 text-primary;
+    width: 3rem;
+    height: 3rem;
+    margin-bottom: 1rem;
+    color: #10B981;
 }
 
 .feature-title {
-    @apply text-xl font-bold mb-2;
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
 }
 
 .feature-description {
-    @apply text-text-secondary;
+    color: #6B7280;
 }
 
 /* Dark mode toggle */
 .dark-mode-toggle {
-    @apply fixed bottom-4 right-4 p-3 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 shadow-lg;
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    padding: 0.75rem;
+    border-radius: 9999px;
+    background-color: #E5E7EB;
+    color: #1F2937;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.dark .dark-mode-toggle {
+    background-color: #374151;
+    color: #E5E7EB;
+}
+
+/* Dark mode styles */
+.dark .hero-description {
+    color: #9CA3AF;
+}
+
+.dark .feature-description {
+    color: #9CA3AF;
 }

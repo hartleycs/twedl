@@ -1,13 +1,28 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="{{ session('darkMode', false) ? 'dark' : '' }}">
 <head>
-    @include('partials.head')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <title>{{ $title ?? config('app.name', 'Twedl') }}</title>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/ui-redesign.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/dashboard-styles.css') }}">
+    
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 </head>
 <body class="min-h-screen bg-white dark:bg-neutral-dark-bg text-text-primary dark:text-text-dark">
     <div class="flex min-h-screen">
         <!-- Sidebar -->
-        <aside class="fixed inset-y-0 left-0 z-50 w-64 transform transition-transform duration-normal ease-in-out bg-neutral-card dark:bg-neutral-dark-card border-r border-gray-200 dark:border-gray-700 lg:translate-x-0 lg:static lg:inset-0 {{ request( )->routeIs('dashboard') ? '' : '-translate-x-full' }} lg:translate-x-0">
+        <aside class="fixed inset-y-0 left-0 z-50 w-64 transform transition-transform duration-normal ease-in-out bg-neutral-card dark:bg-neutral-dark-card border-r border-gray-200 dark:border-gray-700 lg:translate-x-0 lg:static lg:inset-0 {{ request()->routeIs('dashboard') ? '' : '-translate-x-full' }} lg:translate-x-0">
             <div class="flex flex-col h-full">
                 <!-- Logo -->
                 <div class="flex items-center justify-between px-4 py-5 border-b border-gray-200 dark:border-gray-700">
@@ -108,7 +123,7 @@
                             </button>
                             <div x-show="open" @click.away="open = false" class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-neutral-dark-card ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 dark:divide-gray-700">
                                 <div class="py-1">
-                                    <a href="{{ route('dashboard') }}" class="block px-4 py-2 text-sm text-text-primary dark:text-text-dark hover:bg-gray-100 dark:hover:bg-gray-800" wire:navigate>
+                                    <a href="{{ route('settings.profile') }}" class="block px-4 py-2 text-sm text-text-primary dark:text-text-dark hover:bg-gray-100 dark:hover:bg-gray-800" wire:navigate>
                                         {{ __('Settings') }}
                                     </a>
                                 </div>
@@ -167,10 +182,10 @@
                     </div>
                     @else
                     <div class="flex space-x-2">
-                        <a href="{{ route('login') }}" class="inline-flex items-center px-3 py-1 text-sm border border-gray-300 dark:border-gray-600 font-medium rounded-md text-text-primary dark:text-text-dark bg-white dark:bg-neutral-dark-card hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors duration-150">
+                        <a href="{{ route('login') }}" class="login-button">
                             {{ __('Log in') }}
                         </a>
-                        <a href="{{ route('register') }}" class="inline-flex items-center px-3 py-1 text-sm border border-transparent font-medium rounded-md text-white bg-primary hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors duration-150">
+                        <a href="{{ route('register') }}" class="signup-button">
                             {{ __('Register') }}
                         </a>
                     </div>
@@ -190,14 +205,14 @@
     <!-- Dark Mode Toggle -->
     <div class="fixed bottom-8 right-8 z-50">
         <button 
-            class="p-3 rounded-full bg-primary text-white shadow-lg"
+            class="dark-mode-toggle"
             onclick="toggleDarkMode()"
             aria-label="Toggle dark mode"
         >
-            <svg id="dark-icon" class="hidden dark:block" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+            <svg id="dark-icon" class="hidden dark:block h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
                 <path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
             </svg>
-            <svg id="light-icon" class="block dark:hidden" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+            <svg id="light-icon" class="block dark:hidden h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
                 <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
             </svg>
         </button>
@@ -205,11 +220,10 @@
 
     <!-- Scripts -->
     @fluxScripts
-    @stack('scripts' )
+    @stack('scripts')
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function ( ) {
+        document.addEventListener('DOMContentLoaded', function() {
             // Select2 initialization
             const select = document.getElementById('tags');
             if (select) {
@@ -235,26 +249,39 @@
                 });
             }
         });
-
+        
         function toggleDarkMode() {
             if (document.documentElement.classList.contains('dark')) {
                 document.documentElement.classList.remove('dark');
-                localStorage.setItem('darkMode', 'false');
-                // Server-side route call removed
+                localStorage.theme = 'light';
+                fetch('/settings/appearance/update', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    },
+                    body: JSON.stringify({ darkMode: false })
+                });
             } else {
                 document.documentElement.classList.add('dark');
-                localStorage.setItem('darkMode', 'true');
-                // Server-side route call removed
+                localStorage.theme = 'dark';
+                fetch('/settings/appearance/update', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    },
+                    body: JSON.stringify({ darkMode: true })
+                });
             }
         }
-
-        // Check for saved dark mode preference
-        if (localStorage.getItem('darkMode') === 'true') {
+        
+        // On page load, set the theme based on localStorage or system preference
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.documentElement.classList.add('dark');
-        } else if (localStorage.getItem('darkMode') === 'false') {
+        } else {
             document.documentElement.classList.remove('dark');
         }
-
     </script>
 </body>
 </html>
