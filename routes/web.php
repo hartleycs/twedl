@@ -29,6 +29,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+
+    Route::post('/settings/appearance/update', [App\Http\Controllers\AppearanceController::class, 'update'])
+    ->name('settings.appearance.update')
+    ->middleware(['auth']);
     
     // Event routes
     Route::resource('events', EventController::class);

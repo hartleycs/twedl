@@ -11,13 +11,24 @@ class PublicEventController extends Controller
     public function index(Request $request)
     {
         // Base query: only approved/live events
-        $query = Event::query()->where('status', 'A');
+        $query = Event::query()->where('status', 'V');
 
         // Pull all event types for the filter dropdown
         $eventTypes = EventType::orderBy('name')->get();
         $eventSubTypes = collect();
 
-        // Event type filter
+        // If no filters submitted, show search screen only
+        if (!$request->hasAny(['type', 'subtype', 'from', 'to', 'radius', 'lat', 'lng', 'city', 'audience_type'])) {
+            return view('public.events.index', [
+                'events' => collect(),
+                'eventTypes' => $eventTypes,
+                'eventSubTypes' => $eventSubTypes,
+                'audienceTypes' => ['Adults', 'Families', 'Kids', 'Students', 'Professionals', 'All Ages'],
+                'message' => 'Please apply filters and click Search to find events.',
+            ]);
+        }
+
+        // Type filter
         if ($request->filled('type')) {
             $query->where('event_type_id', $request->type);
             $eventSubTypes = EventType::findOrFail($request->type)
@@ -26,12 +37,12 @@ class PublicEventController extends Controller
                 ->get();
         }
 
-        // Sub-type filter
+        // Subtype
         if ($request->filled('subtype')) {
             $query->where('event_sub_type_id', $request->subtype);
         }
 
-        // Date range filters
+        // Date filters
         if ($request->filled('from')) {
             $query->whereDate('start_datetime', '>=', $request->from);
         }
@@ -39,7 +50,7 @@ class PublicEventController extends Controller
             $query->whereDate('end_datetime', '<=', $request->to);
         }
 
-        // Location radius filter (Haversine formula)
+        // Radius filter
         if ($request->filled('lat') && $request->filled('lng') && $request->filled('radius')) {
             $lat = $request->lat;
             $lng = $request->lng;
@@ -59,23 +70,25 @@ class PublicEventController extends Controller
             $query->orderBy('start_datetime', 'asc');
         }
 
-        // Audience type filter
+        // Audience type
         if ($request->filled('audience_type')) {
             $query->where('audience_type', $request->audience_type);
         }
 
+        // City filter
         if ($request->filled('city')) {
-            $query->city($request->city); // This uses the scopeCity() on your Event model
+            $query->city($request->city); // Uses scopeCity()
         }
 
-        // Paginate results
+        // Run query only if filters provided
         $events = $query->paginate(12)->withQueryString();
 
-        // List of selectable audience types
-        $audienceTypes = ['Adults', 'Families', 'Kids', 'Students', 'Professionals', 'All Ages'];
-
-        return view('public.events.index', compact(
-            'events', 'eventTypes', 'eventSubTypes', 'audienceTypes'
-        ));
+        return view('public.events.index', [
+            'events' => $events,
+            'eventTypes' => $eventTypes,
+            'eventSubTypes' => $eventSubTypes,
+            'audienceTypes' => ['Adults', 'Families', 'Kids', 'Students', 'Professionals', 'All Ages'],
+            'message' => null,
+        ]);
     }
 }

@@ -64,6 +64,7 @@
           <input type="hidden" name="lng" id="filter_lng"  value="{{ request('lng') }}">
         </div>
       </div>
+
       {{-- Town or City --}}
       <div>
         <label for="city" class="block font-semibold mb-1">Town / City</label>
@@ -84,47 +85,54 @@
       </div>
     </form>
 
-    @if($events->count())
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        @foreach($events as $e)
-          <div class="p-4 border rounded shadow-sm">
-            <h2 class="text-lg font-semibold">{{ $e->name }}</h2>
-            <p class="text-sm text-gray-600">
-              {{ $e->start_datetime->format('M j, Y g:ia') }}
-              &ndash;
-              {{ $e->end_datetime->format('M j, Y g:ia') }}
-            </p>
-            <p class="text-sm">
-              {{ $e->eventType->name }}
-              @if($e->eventSubType)
-                / {{ $e->eventSubType->name }}
-              @endif
-            </p>
-            <p class="text-sm">{{ $e->location_address }}</p>
-            @php $invite = $e->invites->first(); @endphp
-            @if($invite)
-              <a href="{{ route('invites.show', $invite->token) }}" class="text-blue-600 hover:underline">
-                View details →
-              </a>
-            @endif
-              View details →
-            </a>
-          </div>
-        @endforeach
+    {{-- Instructional Message --}}
+    @if(isset($message))
+      <div class="mb-6 p-4 bg-yellow-100 border border-yellow-300 text-yellow-800 rounded">
+        {{ $message }}
       </div>
+    @endif
 
-      <div class="mt-6">
-        {{ $events->links() }}
-      </div>
-    @else
-      <p class="text-center text-gray-600">No events found matching those criteria.</p>
+    {{-- Only show events if a search was submitted --}}
+    @if(request()->hasAny(['type', 'subtype', 'from', 'to', 'radius', 'lat', 'lng', 'city', 'audience_type']))
+      @if($events->count())
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          @foreach($events as $e)
+            <div class="p-4 border rounded shadow-sm">
+              <h2 class="text-lg font-semibold">{{ $e->name }}</h2>
+              <p class="text-sm text-gray-600">
+                {{ $e->start_datetime->format('M j, Y g:ia') }}
+                &ndash;
+                {{ $e->end_datetime->format('M j, Y g:ia') }}
+              </p>
+              <p class="text-sm">
+                {{ $e->eventType->name }}
+                @if($e->eventSubType)
+                  / {{ $e->eventSubType->name }}
+                @endif
+              </p>
+              <p class="text-sm">{{ $e->location_address }}</p>
+              @php $invite = $e->invites->first(); @endphp
+              @if($invite)
+                <a href="{{ route('invites.show', $invite->token) }}" class="text-blue-600 hover:underline">
+                  View details →
+                </a>
+              @endif
+            </div>
+          @endforeach
+        </div>
+
+        <div class="mt-6">
+          {{ $events->links() }}
+        </div>
+      @else
+        <p class="text-center text-gray-600">No events found matching those criteria.</p>
+      @endif
     @endif
   </div>
 
   @push('scripts')
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // Dynamic sub-types
       const typeSel = document.getElementById('filter_type');
       const subSel  = document.getElementById('filter_subtype');
 
@@ -133,7 +141,7 @@
         subSel.disabled = true;
         subSel.innerHTML = '<option>Loading…</option>';
 
-        if (! typeId) {
+        if (!typeId) {
           subSel.innerHTML = '<option value="">All sub-types</option>';
           return;
         }
@@ -145,7 +153,7 @@
           subSel.innerHTML = '<option value="">All sub-types</option>';
           subs.forEach(s => {
             const opt = document.createElement('option');
-            opt.value       = s.id;
+            opt.value = s.id;
             opt.textContent = s.name;
             if (s.id == {{ request('subtype') ?? 'null' }}) {
               opt.selected = true;
@@ -159,7 +167,6 @@
         }
       });
 
-      // Geolocation
       document.getElementById('detect_location')
         .addEventListener('click', () => {
           if (!navigator.geolocation) {
