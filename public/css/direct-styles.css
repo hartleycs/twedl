@@ -1,0 +1,318 @@
+/* Direct CSS styles for Twedl UI - No Tailwind dependencies */
+
+/* Navigation button styles */
+.nav-button {
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 6px;
+    color: white;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    margin: 4px;
+    text-align: center;
+}
+
+.nav-button-home {
+    background-color: #10B981;
+}
+.nav-button-home:hover {
+    background-color: #059669;
+}
+
+.nav-button-events {
+    background-color: #3B82F6;
+}
+.nav-button-events:hover {
+    background-color: #2563EB;
+}
+
+.nav-button-create {
+    background-color: #F59E0B;
+}
+.nav-button-create:hover {
+    background-color: #D97706;
+}
+
+.nav-button-about {
+    background-color: #8B5CF6;
+}
+.nav-button-about:hover {
+    background-color: #7C3AED;
+}
+
+/* Auth button styles */
+.login-button {
+    display: inline-block;
+    background-color: #10B981;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+.login-button:hover {
+    background-color: #059669;
+}
+
+.signup-button {
+    display: inline-block;
+    background-color: #EC4899;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+.signup-button:hover {
+    background-color: #DB2777;
+}
+
+/* Hero section styles */
+.hero-container {
+    padding: 64px 16px;
+}
+@media (min-width: 768px) {
+    .hero-container {
+        padding: 96px 16px;
+    }
+}
+
+.hero-title {
+    font-size: 36px;
+    line-height: 40px;
+    font-weight: 700;
+    margin-bottom: 24px;
+    line-height: 1.2;
+}
+@media (min-width: 768px) {
+    .hero-title {
+        font-size: 60px;
+        line-height: 1;
+    }
+}
+
+.hero-description {
+    font-size: 20px;
+    color: #6B7280;
+    margin-bottom: 32px;
+    max-width: 672px;
+}
+
+/* Feature section styles */
+.feature-icon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 16px;
+    color: #10B981;
+}
+
+.feature-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.feature-description {
+    color: #6B7280;
+}
+
+/* Dark mode toggle */
+.dark-mode-toggle {
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    padding: 12px;
+    border-radius: 9999px;
+    background-color: #E5E7EB;
+    color: #1F2937;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.dark .dark-mode-toggle {
+    background-color: #374151;
+    color: #E5E7EB;
+}
+
+/* Dark mode styles */
+.dark .hero-description {
+    color: #9CA3AF;
+}
+
+.dark .feature-description {
+    color: #9CA3AF;
+}
+
+/* Sidebar styling */
+.sidebar-item-enhanced {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    border-radius: 6px;
+    color: #4B5563;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+.dark .sidebar-item-enhanced {
+    color: #E5E7EB;
+}
+
+.sidebar-item-enhanced:hover {
+    background-color: #F3F4F6;
+    color: #111827;
+}
+
+.dark .sidebar-item-enhanced:hover {
+    background-color: #374151;
+    color: #F9FAFB;
+}
+
+.sidebar-item-enhanced.active {
+    background-color: #10B981;
+    color: white;
+}
+
+.dark .sidebar-item-enhanced.active {
+    background-color: #059669;
+    color: white;
+}
+
+.sidebar-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 12px;
+}
+
+/* Dashboard cards */
+.dashboard-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    padding: 24px;
+    transition: all 0.3s ease;
+}
+
+.dark .dashboard-card {
+    background-color: #1F2937;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Button styles for dashboard */
+.btn-primary {
+    display: inline-block;
+    background-color: #10B981;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+.btn-primary:hover {
+    background-color: #059669;
+}
+
+.btn-secondary {
+    display: inline-block;
+    background-color: #6B7280;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+.btn-secondary:hover {
+    background-color: #4B5563;
+}
+
+.btn-danger {
+    display: inline-block;
+    background-color: #EF4444;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+.btn-danger:hover {
+    background-color: #DC2626;
+}
+
+/* Dashboard stats */
+.stat-card {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    padding: 20px;
+}
+
+.dark .stat-card {
+    background-color: #1F2937;
+}
+
+.stat-value {
+    font-size: 30px;
+    font-weight: 700;
+    color: #111827;
+}
+
+.dark .stat-value {
+    color: #F9FAFB;
+}
+
+.stat-label {
+    font-size: 14px;
+    color: #6B7280;
+}
+
+.dark .stat-label {
+    color: #9CA3AF;
+}
+
+/* Form elements */
+.form-input {
+    width: 100%;
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid #D1D5DB;
+    background-color: white;
+    color: #111827;
+}
+
+.dark .form-input {
+    background-color: #1F2937;
+    border-color: #4B5563;
+    color: #F9FAFB;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #10B981;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+}
+
+.form-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: #374151;
+}
+
+.dark .form-label {
+    color: #E5E7EB;
+}
