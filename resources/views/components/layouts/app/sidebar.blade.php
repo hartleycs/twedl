@@ -185,6 +185,15 @@
                             </div>
                         </div>
                     </div>
+                    @else
+                    <div class="flex space-x-2">
+                        <a href="{{ route('login') }}" class="inline-flex items-center px-3 py-1 text-sm border border-gray-300 dark:border-gray-600 font-medium rounded-md text-text-primary dark:text-text-dark bg-white dark:bg-neutral-dark-card hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors duration-150">
+                            {{ __('Log in') }}
+                        </a>
+                        <a href="{{ route('register') }}" class="inline-flex items-center px-3 py-1 text-sm border border-transparent font-medium rounded-md text-white bg-primary hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors duration-150">
+                            {{ __('Register') }}
+                        </a>
+                    </div>
                     @endauth
                 </div>
             </header>

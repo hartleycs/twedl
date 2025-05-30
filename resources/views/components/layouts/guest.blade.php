@@ -56,11 +56,12 @@
                 <div class="flex justify-between h-16">
                     <div class="flex">
                         <div class="flex-shrink-0 flex items-center">
-                            <a href="{{ route('dashboard') }}">
+                            <a href="{{ route('home') }}">
                                 <x-app-logo class="block h-8 w-auto" />
                             </a>
                         </div>
                         <nav class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                            @auth
                             <a href="{{ route('dashboard') }}" class="{{ request()->routeIs('dashboard') ? 'border-primary text-primary' : 'border-transparent text-text-secondary hover:border-gray-300 hover:text-text-primary' }} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
                                 Dashboard
                             </a>
@@ -70,9 +71,21 @@
                             <a href="{{ route('events.create') }}" class="{{ request()->routeIs('events.create') ? 'border-primary text-primary' : 'border-transparent text-text-secondary hover:border-gray-300 hover:text-text-primary' }} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
                                 Create Event
                             </a>
+                            @else
+                            <a href="{{ route('home') }}" class="{{ request()->routeIs('home') ? 'border-primary text-primary' : 'border-transparent text-text-secondary hover:border-gray-300 hover:text-text-primary' }} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                                Home
+                            </a>
+                            <a href="#features" class="border-transparent text-text-secondary hover:border-gray-300 hover:text-text-primary inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                                Features
+                            </a>
+                            <a href="#how-it-works" class="border-transparent text-text-secondary hover:border-gray-300 hover:text-text-primary inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                                How It Works
+                            </a>
+                            @endauth
                         </nav>
                     </div>
                     <div class="hidden sm:ml-6 sm:flex sm:items-center">
+                        @auth
                         <!-- Profile dropdown -->
                         <div class="ml-3 relative" x-data="{ open: false }">
                             <div>
@@ -110,6 +123,16 @@
                                 </form>
                             </div>
                         </div>
+                        @else
+                        <div class="flex space-x-4">
+                            <a href="{{ route('login') }}" class="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 text-sm font-medium rounded-md text-text-primary dark:text-text-dark bg-white dark:bg-neutral-dark-card hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors duration-150">
+                                Log in
+                            </a>
+                            <a href="{{ route('register') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors duration-150">
+                                Register
+                            </a>
+                        </div>
+                        @endauth
                     </div>
                     <div class="-mr-2 flex items-center sm:hidden">
                         <!-- Mobile menu button -->
@@ -129,6 +152,7 @@
             <!-- Mobile menu, show/hide based on menu state. -->
             <div class="sm:hidden" id="mobile-menu" x-data="{ open: false }" x-show="open">
                 <div class="pt-2 pb-3 space-y-1">
+                    @auth
                     <a href="{{ route('dashboard') }}" class="{{ request()->routeIs('dashboard') ? 'bg-primary-light dark:bg-primary-light/20 border-primary text-primary' : 'border-transparent text-text-secondary hover:bg-gray-50 dark:hover:bg-gray-800 hover:border-gray-300 hover:text-text-primary' }} block pl-3 pr-4 py-2 border-l-4 text-base font-medium">
                         Dashboard
                     </a>
@@ -138,7 +162,19 @@
                     <a href="{{ route('events.create') }}" class="{{ request()->routeIs('events.create') ? 'bg-primary-light dark:bg-primary-light/20 border-primary text-primary' : 'border-transparent text-text-secondary hover:bg-gray-50 dark:hover:bg-gray-800 hover:border-gray-300 hover:text-text-primary' }} block pl-3 pr-4 py-2 border-l-4 text-base font-medium">
                         Create Event
                     </a>
+                    @else
+                    <a href="{{ route('home') }}" class="{{ request()->routeIs('home') ? 'bg-primary-light dark:bg-primary-light/20 border-primary text-primary' : 'border-transparent text-text-secondary hover:bg-gray-50 dark:hover:bg-gray-800 hover:border-gray-300 hover:text-text-primary' }} block pl-3 pr-4 py-2 border-l-4 text-base font-medium">
+                        Home
+                    </a>
+                    <a href="#features" class="border-transparent text-text-secondary hover:bg-gray-50 dark:hover:bg-gray-800 hover:border-gray-300 hover:text-text-primary block pl-3 pr-4 py-2 border-l-4 text-base font-medium">
+                        Features
+                    </a>
+                    <a href="#how-it-works" class="border-transparent text-text-secondary hover:bg-gray-50 dark:hover:bg-gray-800 hover:border-gray-300 hover:text-text-primary block pl-3 pr-4 py-2 border-l-4 text-base font-medium">
+                        How It Works
+                    </a>
+                    @endauth
                 </div>
+                @auth
                 <div class="pt-4 pb-3 border-t border-gray-200 dark:border-gray-700">
                     <div class="flex items-center px-4">
                         <div class="flex-shrink-0">
@@ -166,6 +202,18 @@
                         </form>
                     </div>
                 </div>
+                @else
+                <div class="pt-4 pb-3 border-t border-gray-200 dark:border-gray-700">
+                    <div class="flex flex-col space-y-2 px-4">
+                        <a href="{{ route('login') }}" class="block w-full text-center px-4 py-2 border border-gray-300 dark:border-gray-600 text-base font-medium rounded-md text-text-primary dark:text-text-dark bg-white dark:bg-neutral-dark-card hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors duration-150">
+                            Log in
+                        </a>
+                        <a href="{{ route('register') }}" class="block w-full text-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-primary hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors duration-150">
+                            Register
+                        </a>
+                    </div>
+                </div>
+                @endauth
             </div>
         </header>
 
