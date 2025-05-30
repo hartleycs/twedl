@@ -5,8 +5,8 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ url('/') }}">
-                        <span class="text-2xl font-bold">Twedl</span>
+                    <a href="{{ url('/') }}" class="logo-text">
+                        Twedl
                     </a>
                 </div>
 
@@ -46,8 +46,8 @@
                             </button>
                         </div>
 
-                        <div x-show="open" @click.away="open = false" class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white dark:bg-neutral-dark-card ring-1 ring-black ring-opacity-5 focus:outline-none" style="display: none;">
-                            <a href="{{ route('settings.profile') }}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
+                        <div x-show="open" @click.away="open = false" class="user-dropdown origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white dark:bg-neutral-dark-card ring-1 ring-black ring-opacity-5 focus:outline-none" style="display: none;">
+                            <a href="{{ route('settings.profile') }}" class="dropdown-item">
                                 {{ __('Settings') }}
                             </a>
                             
@@ -55,7 +55,7 @@
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
 
-                                <button type="submit" class="w-full text-left block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
+                                <button type="submit" class="dropdown-item">
                                     {{ __('Log Out') }}
                                 </button>
                             </form>
@@ -73,7 +73,7 @@
 
             <!-- Hamburger -->
             <div class="-mr-2 flex items-center sm:hidden">
-                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
+                <button @click="open = ! open" class="mobile-menu-button inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
                     <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                         <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                         <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -109,7 +109,7 @@
                 </div>
 
                 <div class="mt-3 space-y-1">
-                    <a href="{{ route('settings.profile') }}" class="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-gray-100 dark:hover:bg-gray-800">
+                    <a href="{{ route('settings.profile') }}" class="dropdown-item block px-4 py-2">
                         {{ __('Settings') }}
                     </a>
                     
@@ -117,7 +117,7 @@
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
 
-                        <button type="submit" class="w-full text-left block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-gray-100 dark:hover:bg-gray-800">
+                        <button type="submit" class="dropdown-item block w-full px-4 py-2">
                             {{ __('Log Out') }}
                         </button>
                     </form>
