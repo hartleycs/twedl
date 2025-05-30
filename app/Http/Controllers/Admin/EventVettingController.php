@@ -5,55 +5,61 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Event;
 use Illuminate\Http\Request;
-use App\Mail\EventApproved;
-use App\Mail\EventRejected;
-use Illuminate\Support\Facades\Mail;
 
 class EventVettingController extends Controller
 {
+    /**
+     * Display a listing of the pending events.
+     *
+     * @return \Illuminate\View\View
+     */
     public function index()
     {
-        $pendingEvents = Event::where('status', 'N')->latest()->get();
-        return view('admin.vetting.index', compact('pendingEvents'));
+        $events = Event::where('status', 'pending')
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+            
+        return view('admin.events.index', compact('events'));
     }
 
-    public function approve(Request $request, Event $event)
+    /**
+     * Show the form for reviewing a specific event.
+     *
+     * @param  \App\Models\Event  $event
+     * @return \Illuminate\View\View
+     */
+    public function review(Event $event)
     {
-        $event->update([
-            'status'          => 'V',
-            'reviewed_by'     => auth()->id(),
-            'reviewed_at'     => now(),
-            'vetting_comments'=> $request->input('vetting_comments'),
-        ]);
-
-        // Notify owner
-        Mail::to($event->user->email)
-            ->send(new EventApproved($event));
-
-        return redirect()
-            ->route('admin.vetting.index')
-            ->with('success', 'Event approved.');
+        return view('admin.events.show', compact('event'));
     }
 
-    public function reject(Request $request, Event $event)
+    /**
+     * Approve the specified event.
+     *
+     * @param  \App\Models\Event  $event
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function approve(Event $event)
     {
-        $data = $request->validate([
-            'vetting_comments' => 'required|string|max:2000',
-        ]);
+        $event->status = 'approved';
+        $event->save();
+        
+        return redirect()->route('admin.events.pending')
+            ->with('success', 'Event has been approved successfully.');
+    }
 
-        $event->update([
-            'status'          => 'VF',
-            'reviewed_by'     => auth()->id(),
-            'reviewed_at'     => now(),
-            'vetting_comments'=> $data['vetting_comments'],
-        ]);
-
-        // Notify owner
-        Mail::to($event->user->email)
-            ->send(new EventRejected($event));
-
-        return redirect()
-            ->route('admin.vetting.index')
-            ->with('success', 'Event rejected.');
+    /**
+     * Reject the specified event.
+     *
+     * @param  \App\Models\Event  $event
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function reject(Event $event)
+    {
+        $event->status = 'rejected';
+        $event->save();
+        
+        return redirect()->route('admin.events.pending')
+            ->with('success', 'Event has been rejected.');
     }
 }

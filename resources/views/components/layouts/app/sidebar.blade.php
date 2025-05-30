@@ -108,7 +108,7 @@
                             </button>
                             <div x-show="open" @click.away="open = false" class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-neutral-dark-card ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 dark:divide-gray-700">
                                 <div class="py-1">
-                                    <a href="{{ route('settings.profile' ) }}" class="block px-4 py-2 text-sm text-text-primary dark:text-text-dark hover:bg-gray-100 dark:hover:bg-gray-800" wire:navigate>
+                                    <a href="{{ route('dashboard') }}" class="block px-4 py-2 text-sm text-text-primary dark:text-text-dark hover:bg-gray-100 dark:hover:bg-gray-800" wire:navigate>
                                         {{ __('Settings') }}
                                     </a>
                                 </div>

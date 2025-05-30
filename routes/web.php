@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\Admin\EventVettingController;
+use App\Http\Controllers\SettingsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +35,10 @@ Route::middleware(['auth'])->group(function () {
     ->name('settings.appearance.update')
     ->middleware(['auth']);
     
+    // Settings routes
+    Route::get('/settings/profile', [SettingsController::class, 'profile'])->name('settings.profile');
+    Route::post('/settings/profile', [SettingsController::class, 'updateProfile'])->name('settings.profile.update');
+    
     // Event routes
     Route::resource('events', EventController::class);
     
@@ -44,5 +49,22 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/events/{event}/review', [EventVettingController::class, 'review'])->name('events.review');
         Route::post('/events/{event}/approve', [EventVettingController::class, 'approve'])->name('events.approve');
         Route::post('/events/{event}/reject', [EventVettingController::class, 'reject'])->name('events.reject');
+        
+        // Tag management routes
+        Route::get('/tags', [App\Http\Controllers\Admin\TagController::class, 'index'])->name('tags.index');
+        Route::post('/tags/{tag}/approve', [App\Http\Controllers\Admin\TagController::class, 'approve'])->name('tags.approve');
+        Route::post('/tags/{tag}/reject', [App\Http\Controllers\Admin\TagController::class, 'reject'])->name('tags.reject');
+        Route::post('/tags/bulk', [App\Http\Controllers\Admin\TagController::class, 'bulk'])->name('tags.bulk');
+        
+        // Event type management routes
+        Route::resource('event-types', App\Http\Controllers\Admin\EventTypeController::class);
+        
+        // Event sub-type management routes
+        Route::get('/event-types/{eventType}/sub-types', [App\Http\Controllers\Admin\EventSubTypeController::class, 'index'])->name('event-types.sub-types.index');
+        Route::get('/event-types/{eventType}/sub-types/create', [App\Http\Controllers\Admin\EventSubTypeController::class, 'create'])->name('event-types.sub-types.create');
+        Route::post('/event-types/{eventType}/sub-types', [App\Http\Controllers\Admin\EventSubTypeController::class, 'store'])->name('event-types.sub-types.store');
+        Route::get('/sub-types/{subType}/edit', [App\Http\Controllers\Admin\EventSubTypeController::class, 'edit'])->name('sub-types.edit');
+        Route::put('/sub-types/{subType}', [App\Http\Controllers\Admin\EventSubTypeController::class, 'update'])->name('sub-types.update');
+        Route::delete('/sub-types/{subType}', [App\Http\Controllers\Admin\EventSubTypeController::class, 'destroy'])->name('sub-types.destroy');
     });
 });
