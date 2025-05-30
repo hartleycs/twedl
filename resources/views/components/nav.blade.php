@@ -1,7 +1,7 @@
 <nav class="bg-white border-b border-gray-200 dark:bg-zinc-900 dark:border-zinc-800 shadow-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16 items-center">
-            <a href="{{ route('home') }}" class="text-xl font-semibold text-blue-600 hover:text-blue-800">
+            <a href="{{ url('/') }}" class="text-xl font-semibold text-blue-600 hover:text-blue-800">
                 Twedl
             </a>
 

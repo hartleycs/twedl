@@ -56,7 +56,7 @@
                 <div class="flex justify-between h-16">
                     <div class="flex">
                         <div class="flex-shrink-0 flex items-center">
-                            <a href="{{ route('home') }}">
+                            <a href="{{ url('/') }}">
                                 <x-app-logo class="block h-8 w-auto" />
                             </a>
                         </div>
@@ -72,7 +72,7 @@
                                 Create Event
                             </a>
                             @else
-                            <a href="{{ route('home') }}" class="{{ request()->routeIs('home') ? 'border-primary text-primary' : 'border-transparent text-text-secondary hover:border-gray-300 hover:text-text-primary' }} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            <a href="{{ url('/') }}" class="{{ request()->is('/') ? 'border-primary text-primary' : 'border-transparent text-text-secondary hover:border-gray-300 hover:text-text-primary' }} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
                                 Home
                             </a>
                             <a href="#features" class="border-transparent text-text-secondary hover:border-gray-300 hover:text-text-primary inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
@@ -163,7 +163,7 @@
                         Create Event
                     </a>
                     @else
-                    <a href="{{ route('home') }}" class="{{ request()->routeIs('home') ? 'bg-primary-light dark:bg-primary-light/20 border-primary text-primary' : 'border-transparent text-text-secondary hover:bg-gray-50 dark:hover:bg-gray-800 hover:border-gray-300 hover:text-text-primary' }} block pl-3 pr-4 py-2 border-l-4 text-base font-medium">
+                    <a href="{{ url('/') }}" class="{{ request()->is('/') ? 'bg-primary-light dark:bg-primary-light/20 border-primary text-primary' : 'border-transparent text-text-secondary hover:bg-gray-50 dark:hover:bg-gray-800 hover:border-gray-300 hover:text-text-primary' }} block pl-3 pr-4 py-2 border-l-4 text-base font-medium">
                         Home
                     </a>
                     <a href="#features" class="border-transparent text-text-secondary hover:bg-gray-50 dark:hover:bg-gray-800 hover:border-gray-300 hover:text-text-primary block pl-3 pr-4 py-2 border-l-4 text-base font-medium">

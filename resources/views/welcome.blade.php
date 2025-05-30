@@ -64,12 +64,12 @@
                 <div class="flex justify-between h-16">
                     <div class="flex items-center">
                         <div class="flex-shrink-0 flex items-center">
-                            <a href="{{ route('home') }}" class="text-2xl font-bold">
+                            <a href="{{ url('/') }}" class="text-2xl font-bold">
                                 Twedl
                             </a>
                         </div>
                         <nav class="hidden sm:ml-6 sm:flex sm:space-x-3">
-                            <a href="{{ route('home') }}" class="nav-button nav-button-home">
+                            <a href="{{ url('/') }}" class="nav-button nav-button-home">
                                 Home
                             </a>
                             <a href="{{ route('events.index') }}" class="nav-button nav-button-events">
@@ -115,7 +115,7 @@
             <!-- Mobile menu, show/hide based on menu state. -->
             <div class="sm:hidden" id="mobile-menu" x-data="{ open: false }" x-show="open">
                 <div class="pt-2 pb-3 space-y-2 px-4">
-                    <a href="{{ route('home') }}" class="block nav-button nav-button-home w-full text-center">
+                    <a href="{{ url('/') }}" class="block nav-button nav-button-home w-full text-center">
                         Home
                     </a>
                     <a href="{{ route('events.index') }}" class="block nav-button nav-button-events w-full text-center">
