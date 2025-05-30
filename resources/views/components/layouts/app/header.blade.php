@@ -1,26 +1,29 @@
-{{-- resources/views/components/layouts/app/header.blade.php --}}
+{{-- Updated header component with colorful navigation buttons --}}
 <header class="bg-white dark:bg-neutral-dark-card shadow-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
-            <div class="flex">
+            <div class="flex items-center">
                 <div class="flex-shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
-                        <x-app-logo class="block h-8 w-auto" />
+                    <a href="{{ route('home') }}" class="text-2xl font-bold">
+                        Twedl
                     </a>
                 </div>
-                <nav class="hidden sm:ml-6 sm:flex sm:space-x-8">
-                    <a href="{{ route('dashboard') }}" class="{{ request()->routeIs('dashboard') ? 'border-primary text-primary' : 'border-transparent text-text-secondary hover:border-gray-300 hover:text-text-primary' }} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
-                        Dashboard
+                <nav class="hidden sm:ml-6 sm:flex sm:space-x-3">
+                    <a href="{{ route('home') }}" class="nav-button nav-button-home">
+                        Home
                     </a>
-                    <a href="{{ route('events.index') }}" class="{{ request()->routeIs('events.index') ? 'border-primary text-primary' : 'border-transparent text-text-secondary hover:border-gray-300 hover:text-text-primary' }} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
-                        My Events
+                    <a href="{{ route('events.index') }}" class="nav-button nav-button-events">
+                        Events
                     </a>
-                    <a href="{{ route('events.create') }}" class="{{ request()->routeIs('events.create') ? 'border-primary text-primary' : 'border-transparent text-text-secondary hover:border-gray-300 hover:text-text-primary' }} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
-                        Create Event
+                    <a href="{{ route('events.create') }}" class="nav-button nav-button-create">
+                        Create
+                    </a>
+                    <a href="#about" class="nav-button nav-button-about">
+                        About
                     </a>
                 </nav>
             </div>
-            <div class="hidden sm:ml-6 sm:flex sm:items-center">
+            <div class="hidden sm:ml-6 sm:flex sm:items-center space-x-3">
                 @auth
                 <!-- Profile dropdown -->
                 <div class="ml-3 relative" x-data="{ open: false }">
@@ -60,12 +63,12 @@
                     </div>
                 </div>
                 @else
-                <div class="flex space-x-4">
-                    <a href="{{ route('login') }}" class="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 text-sm font-medium rounded-md text-text-primary dark:text-text-dark bg-white dark:bg-neutral-dark-card hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors duration-150">
-                        Log in
+                <div class="flex space-x-3">
+                    <a href="{{ route('login') }}" class="login-button">
+                        Log In
                     </a>
-                    <a href="{{ route('register') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors duration-150">
-                        Register
+                    <a href="{{ route('register') }}" class="signup-button">
+                        Sign Up
                     </a>
                 </div>
                 @endauth
@@ -87,15 +90,18 @@
 
     <!-- Mobile menu, show/hide based on menu state. -->
     <div class="sm:hidden" id="mobile-menu" x-data="{ open: false }" x-show="open">
-        <div class="pt-2 pb-3 space-y-1">
-            <a href="{{ route('dashboard') }}" class="{{ request()->routeIs('dashboard') ? 'bg-primary-light dark:bg-primary-light/20 border-primary text-primary' : 'border-transparent text-text-secondary hover:bg-gray-50 dark:hover:bg-gray-800 hover:border-gray-300 hover:text-text-primary' }} block pl-3 pr-4 py-2 border-l-4 text-base font-medium">
-                Dashboard
+        <div class="pt-2 pb-3 space-y-2 px-4">
+            <a href="{{ route('home') }}" class="block nav-button nav-button-home w-full text-center">
+                Home
             </a>
-            <a href="{{ route('events.index') }}" class="{{ request()->routeIs('events.index') ? 'bg-primary-light dark:bg-primary-light/20 border-primary text-primary' : 'border-transparent text-text-secondary hover:bg-gray-50 dark:hover:bg-gray-800 hover:border-gray-300 hover:text-text-primary' }} block pl-3 pr-4 py-2 border-l-4 text-base font-medium">
-                My Events
+            <a href="{{ route('events.index') }}" class="block nav-button nav-button-events w-full text-center">
+                Events
             </a>
-            <a href="{{ route('events.create') }}" class="{{ request()->routeIs('events.create') ? 'bg-primary-light dark:bg-primary-light/20 border-primary text-primary' : 'border-transparent text-text-secondary hover:bg-gray-50 dark:hover:bg-gray-800 hover:border-gray-300 hover:text-text-primary' }} block pl-3 pr-4 py-2 border-l-4 text-base font-medium">
-                Create Event
+            <a href="{{ route('events.create') }}" class="block nav-button nav-button-create w-full text-center">
+                Create
+            </a>
+            <a href="#about" class="block nav-button nav-button-about w-full text-center">
+                About
             </a>
         </div>
         @auth
@@ -111,16 +117,16 @@
                     <div class="text-sm font-medium text-text-secondary dark:text-text-dark-secondary">{{ auth()->user()->email }}</div>
                 </div>
             </div>
-            <div class="mt-3 space-y-1">
-                <a href="{{ route('settings.profile') }}" class="block px-4 py-2 text-base font-medium text-text-secondary dark:text-text-dark-secondary hover:text-text-primary dark:hover:text-text-dark hover:bg-gray-100 dark:hover:bg-gray-800">
+            <div class="mt-3 space-y-1 px-4">
+                <a href="{{ route('settings.profile') }}" class="block px-4 py-2 text-base font-medium text-text-secondary dark:text-text-dark-secondary hover:text-text-primary dark:hover:text-text-dark hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md">
                     Your Profile
                 </a>
-                <a href="{{ route('settings.profile') }}" class="block px-4 py-2 text-base font-medium text-text-secondary dark:text-text-dark-secondary hover:text-text-primary dark:hover:text-text-dark hover:bg-gray-100 dark:hover:bg-gray-800">
+                <a href="{{ route('settings.profile') }}" class="block px-4 py-2 text-base font-medium text-text-secondary dark:text-text-dark-secondary hover:text-text-primary dark:hover:text-text-dark hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md">
                     Settings
                 </a>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
-                    <button type="submit" class="block w-full text-left px-4 py-2 text-base font-medium text-text-secondary dark:text-text-dark-secondary hover:text-text-primary dark:hover:text-text-dark hover:bg-gray-100 dark:hover:bg-gray-800">
+                    <button type="submit" class="block w-full text-left px-4 py-2 text-base font-medium text-text-secondary dark:text-text-dark-secondary hover:text-text-primary dark:hover:text-text-dark hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md">
                         Sign out
                     </button>
                 </form>
@@ -129,11 +135,11 @@
         @else
         <div class="pt-4 pb-3 border-t border-gray-200 dark:border-gray-700">
             <div class="flex flex-col space-y-2 px-4">
-                <a href="{{ route('login') }}" class="block w-full text-center px-4 py-2 border border-gray-300 dark:border-gray-600 text-base font-medium rounded-md text-text-primary dark:text-text-dark bg-white dark:bg-neutral-dark-card hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors duration-150">
-                    Log in
+                <a href="{{ route('login') }}" class="login-button w-full text-center">
+                    Log In
                 </a>
-                <a href="{{ route('register') }}" class="block w-full text-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-primary hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors duration-150">
-                    Register
+                <a href="{{ route('register') }}" class="signup-button w-full text-center">
+                    Sign Up
                 </a>
             </div>
         </div>

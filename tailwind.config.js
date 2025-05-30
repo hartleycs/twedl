@@ -1,4 +1,4 @@
-/* Tailwind CSS configuration for Twedl.com with updated brighter colors */
+/* Updated Tailwind CSS configuration for Twedl.com with vibrant colors matching reference UI */
 module.exports = {
   content: [
     './resources/**/*.blade.php',
@@ -10,33 +10,38 @@ module.exports = {
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#27667B',
-          hover: '#143D60',
-          light: '#DDEB9D',
+          DEFAULT: '#6366F1', /* Updated to match reference UI */
+          hover: '#4F46E5',
+          light: '#EEF2FF',
         },
         secondary: {
-          DEFAULT: '#A0C878',
-          hover: '#8BB562',
-          light: '#E9F5D0',
+          DEFAULT: '#EC4899', /* Updated to match reference UI */
+          hover: '#DB2777',
+          light: '#FCE7F3',
+        },
+        accent: {
+          green: '#10B981', /* New color for "Events" button */
+          orange: '#F59E0B', /* New color for "Create" button */
+          purple: '#8B5CF6', /* New color for "About" button */
         },
         neutral: {
           background: '#FFFFFF',
           card: '#F9FAFB',
-          'dark-bg': '#0F2A45',
-          'dark-card': '#1A3A5A',
+          'dark-bg': '#111827',
+          'dark-card': '#1F2937',
         },
         text: {
-          primary: '#143D60',
-          secondary: '#27667B',
-          light: '#6B8A9C',
+          primary: '#111827',
+          secondary: '#4B5563',
+          light: '#6B7280',
           dark: '#F9FAFB',
           'dark-secondary': '#D1D5DB',
         },
         status: {
-          success: '#A0C878',
-          warning: '#F5D76E',
-          error: '#E74C3C',
-          info: '#27667B',
+          success: '#10B981',
+          warning: '#F59E0B',
+          error: '#EF4444',
+          info: '#3B82F6',
         },
       },
       fontFamily: {
@@ -45,8 +50,8 @@ module.exports = {
         mono: ['JetBrains Mono', 'monospace'],
       },
       boxShadow: {
-        card: '0 4px 6px -1px rgba(20, 61, 96, 0.1), 0 2px 4px -1px rgba(20, 61, 96, 0.06)',
-        'card-hover': '0 10px 15px -3px rgba(20, 61, 96, 0.1), 0 4px 6px -2px rgba(20, 61, 96, 0.05)',
+        card: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+        'card-hover': '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
       },
       transitionDuration: {
         fast: '150ms',
@@ -54,6 +59,7 @@ module.exports = {
       },
       borderRadius: {
         'card': '0.5rem',
+        'button': '0.375rem',
       },
     },
   },
