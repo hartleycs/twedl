@@ -13,11 +13,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Styles -->
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="{{ asset('css/ui-redesign.css') }}">
-    
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
     
     <!-- Additional Styles -->
     <style>
@@ -56,7 +53,7 @@
         }
     </style>
 </head>
-<body class="antialiased bg-white dark:bg-neutral-dark-bg text-text-primary dark:text-text-dark">
+<body class="antialiased bg-pattern text-text-primary dark:text-text-dark">
     <div class="min-h-screen flex flex-col">
         <!-- Header -->
         <header class="bg-white dark:bg-neutral-dark-card shadow-sm">
@@ -295,24 +292,39 @@
         </svg>
     </button>
 
-    <!-- Alpine.js -->
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
-    
-    <!-- Additional Scripts -->
     <script>
         function toggleDarkMode() {
-            document.documentElement.classList.toggle('dark');
-            localStorage.setItem('darkMode', document.documentElement.classList.contains('dark'));
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.theme = 'light';
+                fetch('/settings/appearance/update', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    },
+                    body: JSON.stringify({ darkMode: false })
+                });
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.theme = 'dark';
+                fetch('/settings/appearance/update', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    },
+                    body: JSON.stringify({ darkMode: true })
+                });
+            }
         }
         
-        // Check for saved dark mode preference
-        if (localStorage.getItem('darkMode') === 'true' || 
-            (!localStorage.getItem('darkMode') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        // On page load, set the theme based on localStorage or system preference
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.documentElement.classList.add('dark');
         } else {
             document.documentElement.classList.remove('dark');
         }
     </script>
-    @stack('scripts')
 </body>
 </html>

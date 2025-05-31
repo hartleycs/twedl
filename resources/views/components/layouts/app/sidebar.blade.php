@@ -11,14 +11,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Styles -->
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="{{ asset('css/direct-styles.css') }}">
-    
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 </head>
-<body class="min-h-screen bg-white dark:bg-neutral-dark-bg text-text-primary dark:text-text-dark">
+<body class="min-h-screen bg-pattern text-text-primary dark:text-text-dark">
     <div class="flex min-h-screen">
         <!-- Sidebar -->
         <aside class="fixed inset-y-0 left-0 z-50 w-64 transform transition-transform duration-normal ease-in-out bg-neutral-card dark:bg-neutral-dark-card border-r border-gray-200 dark:border-gray-700 lg:translate-x-0 lg:static lg:inset-0 {{ request()->routeIs('dashboard') ? '' : '-translate-x-full' }} lg:translate-x-0">
@@ -220,19 +216,8 @@
     <!-- Scripts -->
     @fluxScripts
     @stack('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Select2 initialization
-            const select = document.getElementById('tags');
-            if (select) {
-                $(select).select2({
-                    placeholder: 'Select or type tags',
-                    tags: true,
-                    tokenSeparators: [',']
-                });
-            }
-
             // Mobile sidebar toggle
             const openSidebarBtn = document.getElementById('openSidebar');
             const closeSidebarBtn = document.getElementById('closeSidebar');
