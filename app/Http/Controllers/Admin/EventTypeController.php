@@ -3,27 +3,22 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\EventType;
 use Illuminate\Http\Request;
 
 class EventTypeController extends Controller
 {
     /**
      * Display a listing of the event types.
-     *
-     * @return \Illuminate\View\View
      */
     public function index()
     {
-        // In a real implementation, you would fetch event types from the database
-        $eventTypes = [];
-        
-        return view('admin.event-types.index', compact('eventTypes'));
+        $types = EventType::orderBy('name')->get();
+        return view('admin.event-types.index', compact('types'));
     }
 
     /**
      * Show the form for creating a new event type.
-     *
-     * @return \Illuminate\View\View
      */
     public function create()
     {
@@ -31,59 +26,56 @@ class EventTypeController extends Controller
     }
 
     /**
-     * Store a newly created event type in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
+     * Store a newly created event type.
      */
     public function store(Request $request)
     {
-        // In a real implementation, you would validate and store the event type
-        
-        return redirect()->route('admin.event-types.index')
-            ->with('success', 'Event type created successfully.');
+        $request->validate([
+            'name' => 'required|string|unique:event_types,name',
+        ]);
+
+        EventType::create([
+            'name' => $request->input('name'),
+        ]);
+
+        return redirect()
+            ->route('admin.event-types.index')
+            ->with('success', 'Event type added.');
     }
 
     /**
      * Show the form for editing the specified event type.
-     *
-     * @param  int  $id
-     * @return \Illuminate\View\View
      */
-    public function edit($id)
+    public function edit(EventType $eventType)
     {
-        // In a real implementation, you would fetch the event type from the database
-        $eventType = null;
-        
         return view('admin.event-types.edit', compact('eventType'));
     }
 
     /**
-     * Update the specified event type in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse
+     * Update the specified event type.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, EventType $eventType)
     {
-        // In a real implementation, you would validate and update the event type
-        
-        return redirect()->route('admin.event-types.index')
-            ->with('success', 'Event type updated successfully.');
+        $request->validate([
+            'name' => 'required|string|unique:event_types,name,' . $eventType->id,
+        ]);
+
+        $eventType->update([
+            'name' => $request->input('name'),
+        ]);
+
+        return redirect()
+            ->route('admin.event-types.index')
+            ->with('success', 'Event type updated.');
     }
 
     /**
-     * Remove the specified event type from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse
+     * Remove the specified event type.
      */
-    public function destroy($id)
+    public function destroy(EventType $eventType)
     {
-        // In a real implementation, you would delete the event type
-        
-        return redirect()->route('admin.event-types.index')
-            ->with('success', 'Event type deleted successfully.');
+        $eventType->delete();
+
+        return back()->with('success', 'Event type deleted.');
     }
 }

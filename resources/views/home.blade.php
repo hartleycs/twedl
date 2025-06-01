@@ -28,7 +28,7 @@
       @endauth
 
       {{-- Search / Filter --}}
-      <form method="GET" action="{{ url('/') }}"
+      <form method="GET" action="{{ route('home') }}"
             class="mb-8 grid grid-cols-1 sm:grid-cols-4 gap-4">
         <input type="text" name="city" value="{{ request('city') }}"
                placeholder="City" class="border rounded px-3 py-2">
