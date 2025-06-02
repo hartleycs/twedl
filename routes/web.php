@@ -18,7 +18,7 @@ use App\Http\Controllers\Admin\EventVettingController;
 // Public routes
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
 
 // Authentication routes (handled by Laravel Breeze)
 require __DIR__.'/auth.php';
