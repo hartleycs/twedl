@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\Admin\EventVettingController;
 use App\Http\Controllers\Admin\AdminTagController;
+use App\Http\Controllers\Admin\EventTypeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,11 +46,15 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/events/{event}/review', [EventVettingController::class, 'review'])->name('events.review');
         Route::post('/events/{event}/approve', [EventVettingController::class, 'approve'])->name('events.approve');
         Route::post('/events/{event}/reject', [EventVettingController::class, 'reject'])->name('events.reject');
+        Route::get('/events/moderate', [EventVettingController::class, 'index'])->name('events.moderate');
         
         // Tag moderation routes
         Route::get('/tags', [AdminTagController::class, 'index'])->name('tags.index');
         Route::post('/tags/{tag}/approve', [AdminTagController::class, 'approve'])->name('tags.approve');
         Route::post('/tags/{tag}/reject', [AdminTagController::class, 'reject'])->name('tags.reject');
         Route::post('/tags/bulk', [AdminTagController::class, 'bulk'])->name('tags.bulk');
+        
+        // Event type management routes
+        Route::resource('event-types', EventTypeController::class);
     });
 });
